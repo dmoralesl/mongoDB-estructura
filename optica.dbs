@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="optica" id="Project-ca9" database="MongoDb" >
+	<schema name="optica" >
+		<table name="Collection" />
+		<table name="glasses" prior="Collection_0" >
+			<column name="brand" type="string" jt="12" mandatory="y" />
+			<column name="lenses" type="array[int]" jt="4999545" />
+			<column name="frame" type="enum" jt="12" mandatory="y" >
+				<enumeration><![CDATA["float","paste","metal"]]></enumeration>
+			</column>
+			<column name="frame_color" type="string" jt="12" />
+			<column name="glasses_color" type="string" jt="12" />
+			<column name="price" type="double" jt="8" mandatory="y" />
+			<column name="sold_by" type="string" jt="12" mandatory="y" />
+			<column name="sold_date" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[sysdate]]></defo>
+			</column>
+			<column name="client" type="object" jt="4999544" mandatory="y" >
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="phone" type="string" jt="12" mandatory="y" />
+				<column name="email" type="string" jt="12" />
+				<column name="registation_date" type="date" jt="91" />
+				<column name="recommended_by" type="oid" jt="-8" />
+				<column name="address" type="object" jt="4999544" >
+					<column name="street" type="string" jt="12" />
+					<column name="number" type="int" jt="4" />
+					<column name="floor" type="int" jt="4" />
+					<column name="city" type="string" jt="12" />
+					<column name="postal_code" type="int" jt="4" />
+					<column name="country" type="string" jt="12" />
+				</column>
+			</column>
+			<column name="provider" type="object" jt="4999544" mandatory="y" >
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="phone" type="string" jt="12" mandatory="y" />
+				<column name="fax" type="string" jt="12" />
+				<column name="nif" type="string" jt="12" mandatory="y" />
+				<column name="address" type="object" jt="4999544" mandatory="y" >
+					<column name="street" type="string" jt="12" mandatory="y" />
+					<column name="number" type="int" jt="4" />
+					<column name="floor" type="int" jt="4" />
+					<column name="city" type="string" jt="12" />
+					<column name="postal_code" type="int" jt="4" mandatory="y" />
+					<column name="country" type="string" jt="12" mandatory="y" />
+				</column>
+			</column>
+		</table>
+		<table name="provider" >
+			<column name="name" type="string" jt="12" mandatory="y" />
+			<column name="phone" type="string" jt="12" />
+			<column name="fax" type="string" jt="12" />
+			<column name="nif" type="string" jt="12" />
+			<column name="address" type="object" jt="4999544" mandatory="y" >
+				<column name="street" type="string" jt="12" mandatory="y" />
+				<column name="number" type="int" jt="4" />
+				<column name="floor" type="int" jt="4" />
+				<column name="city" type="string" jt="12" />
+				<column name="postal_code" type="int" jt="4" mandatory="y" />
+				<column name="country" type="string" jt="12" mandatory="y" />
+			</column>
+		</table>
+		<table name="provider" prior="Collection" >
+			<column name="name" type="string" jt="12" mandatory="y" />
+			<column name="phone" type="string" jt="12" />
+			<column name="fax" type="string" jt="12" />
+			<column name="nif" type="string" jt="12" />
+			<column name="address" type="object" jt="4999544" mandatory="y" >
+				<column name="street" type="string" jt="12" mandatory="y" />
+				<column name="number" type="int" jt="4" />
+				<column name="floor" type="int" jt="4" />
+				<column name="city" type="string" jt="12" />
+				<column name="postal_code" type="int" jt="4" mandatory="y" />
+				<column name="country" type="string" jt="12" mandatory="y" />
+			</column>
+		</table>
+	</schema>
+	<connector name="MyDb" database="MySql" host="localhost" port="3306" user="root" />
+	<layout name="Default Layout" id="Layout-5f2" show_relation="columns" >
+		<entity schema="optica" name="glasses" column="client.address" color="3986C1" x="64" y="400" />
+		<entity schema="optica" name="glasses" column="provider.address" color="3986C1" x="496" y="384" />
+		<entity schema="optica" name="glasses" column="client" color="3986C1" x="48" y="192" />
+		<entity schema="optica" name="glasses" color="CAEEC1" x="288" y="48" />
+		<entity schema="optica" name="glasses" column="lenses" color="3986C1" x="96" y="64" />
+		<entity schema="optica" name="glasses" column="provider" color="3986C1" x="512" y="144" />
+		<script name="JSon" id="Editor-1235" language="SQL" >
+			<string><![CDATA[// REPLACE <database> and <collection> WITH AN EXISTING DATABASE AND COLLECTION
+<database>.<collection>.find()]]></string>
+		</script>
+	</layout>
+</project>

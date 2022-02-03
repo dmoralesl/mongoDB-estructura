@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="pizzeria" id="Project-c17" database="MongoDb" >
+	<schema name="pizzeria" >
+		<table name="client" prior="Collection" >
+			<column name="_id" type="oid" jt="-8" mandatory="y" />
+			<column name="name" type="string" jt="12" mandatory="y" />
+			<column name="surnames" type="string" jt="12" />
+			<column name="address" type="string" jt="12" mandatory="y" />
+			<column name="postal_code" type="int" jt="4" mandatory="y" />
+			<column name="city" type="string" jt="12" mandatory="y" />
+			<column name="province" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="order" prior="orders" >
+			<column name="_id" type="oid" jt="-8" mandatory="y" />
+			<column name="orderded_at" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[sysdate]]></defo>
+			</column>
+			<column name="type" type="enum" jt="12" mandatory="y" >
+				<enumeration><![CDATA["delivery","take away"]]></enumeration>
+			</column>
+			<column name="products" type="array[object]" jt="4999545" mandatory="y" >
+				<column name="type" type="enum" jt="12" mandatory="y" >
+					<enumeration><![CDATA["pizza","hamburger","drink"]]></enumeration>
+				</column>
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="description" type="string" jt="12" />
+				<column name="image_url" type="string" jt="12" />
+				<column name="prize" type="double" jt="8" mandatory="y" />
+				<column name="cateogory" type="string" jt="12" />
+			</column>
+			<column name="prize" type="double" jt="8" mandatory="y" />
+			<column name="client" type="object" jt="4999544" mandatory="y" >
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="id_client" type="oid" jt="-8" mandatory="y" />
+			</column>
+			<column name="employee" type="object" jt="4999544" >
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="id_employee" type="oid" jt="-8" />
+			</column>
+			<column name="delivery_date" type="date" jt="91" />
+			<fk name="fk_order_client" virtual="y" to_schema="pizzeria" to_table="client" >
+				<fk_column name="client.id_client" pk="_id" />
+			</fk>
+			<fk name="fk_order_shop" virtual="y" to_schema="pizzeria" to_table="shop" >
+				<fk_column name="employee.id_employee" pk="employees._id" />
+			</fk>
+		</table>
+		<table name="shop" prior="Collection" >
+			<column name="_id" type="oid" jt="-8" mandatory="y" />
+			<column name="address" type="string" jt="12" mandatory="y" />
+			<column name="postal_code" type="int" jt="4" mandatory="y" />
+			<column name="city" type="string" jt="12" mandatory="y" />
+			<column name="province" type="string" jt="12" mandatory="y" />
+			<column name="employees" type="array[object]" jt="4999545" mandatory="y" >
+				<column name="_id" type="oid" jt="-8" mandatory="y" />
+				<column name="name" type="string" jt="12" mandatory="y" />
+				<column name="surnames" type="string" jt="12" />
+				<column name="nif" type="string" jt="12" mandatory="y" />
+				<column name="phone" type="string" jt="12" mandatory="y" />
+				<column name="job" type="enum" jt="12" mandatory="y" >
+					<enumeration><![CDATA["kitchen","deliver"]]></enumeration>
+				</column>
+			</column>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-15fb" show_relation="columns" >
+		<entity schema="pizzeria" name="client" color="E7EEC1" x="736" y="272" />
+		<entity schema="pizzeria" name="order" column="client" color="3986C1" x="240" y="256" />
+		<entity schema="pizzeria" name="order" column="employee" color="3986C1" x="576" y="496" />
+		<entity schema="pizzeria" name="shop" column="employees" color="3986C1" x="48" y="560" />
+		<entity schema="pizzeria" name="order" color="E7EEC1" x="464" y="272" />
+		<entity schema="pizzeria" name="order" column="products" color="3986C1" x="464" y="48" />
+		<entity schema="pizzeria" name="shop" color="E7EEC1" x="224" y="448" />
+		<shape x="64" y="48" style="Rectangle" color="E7EEC1" >
+			<comment><![CDATA[Collections]]></comment>
+		</shape>
+		<shape x="64" y="128" style="Rectangle" color="3986C1" >
+			<comment><![CDATA[Embedded documents]]></comment>
+		</shape>
+	</layout>
+</project>
